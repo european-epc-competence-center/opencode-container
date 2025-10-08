@@ -2,6 +2,10 @@
 
 ## WIP
 
+- Modified `startup.sh` to prompt user for API key when auth file doesn't exist, instead of using hardcoded key
+- Fixed syntax error in `startup.sh` (missing bracket in file check condition)
+- Changed Dockerfile to use `ENTRYPOINT` instead of `CMD` to properly support argument forwarding to opencode
+- Fixed `.dockerignore` to include `startup.sh` in build context (was being excluded by `*.sh` pattern)
 - Initial project setup with OpenCode Docker container
 - Created Dockerfile based on Ubuntu 22.04 with essential development tools
 - Added convenience script `run_opencode_container.sh` with:

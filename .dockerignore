@@ -7,7 +7,7 @@ README.md
 Changelog.md
 
 # Ignore shell scripts (not copied into image)
-*.sh
+run_opencode_container.sh
 
 # Ignore cursor/editor files
 .cursor/

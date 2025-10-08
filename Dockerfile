@@ -27,5 +27,7 @@ RUN npm install -g opencode-ai
 
 WORKDIR /app
 
+COPY startup.sh /usr/local/bin/startup.sh
+RUN chmod +x /usr/local/bin/startup.sh
 
-CMD ["/bin/bash", "-c", "opencode"]
+ENTRYPOINT ["/usr/local/bin/startup.sh"]

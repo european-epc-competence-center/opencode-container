@@ -2,6 +2,8 @@
 
 set -e
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 show_help() {
     cat <<EOF
 Usage: $(basename "$0") [OPTIONS]
@@ -49,14 +51,14 @@ build_image() {
     # Force rebuild if requested
     if [ "$force_build" = true ]; then
         echo "Force rebuilding opencode image..."
-        DOCKER_BUILDKIT=1 docker build --progress=plain -t opencode .
+        DOCKER_BUILDKIT=1 docker build --progress=plain -t opencode "$SCRIPT_DIR"
         return
     fi
 
     # Build the image if it doesn't exist
     if [ -z "$(docker images -q opencode 2>/dev/null)" ]; then
         echo "Building opencode image..."
-        DOCKER_BUILDKIT=1 docker build --progress=plain -t opencode .
+        DOCKER_BUILDKIT=1 docker build --progress=plain -t opencode "$SCRIPT_DIR"
     else
         echo "Using existing opencode image."
     fi

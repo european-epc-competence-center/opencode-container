@@ -24,7 +24,18 @@ This project provides Docker containerization for OpenCode to isolate AI code ex
 - Base: Ubuntu 22.04
 - Installs common dev tools: git, bash, python3, npm, curl, jq, etc.
 - Installs OpenCode via npm: `npm install -g opencode-ai` (ensures proper PATH setup in container)
-- Default CMD: `opencode`
+- Copies and runs `startup.sh` as the container's ENTRYPOINT (allowing argument forwarding)
+
+### startup.sh
+
+Container initialization script that:
+
+- Creates default config file (`~/.config/opencode/config.json`) if it doesn't exist
+  - Configures EECC API as the provider with Claude Sonnet 4 and 4.5 models
+- Checks for auth file (`~/.local/share/opencode/auth.json`)
+  - If missing, prompts user interactively for EECC API key
+  - Creates auth file with provided key (exits with error if key is empty)
+- Launches OpenCode with any provided arguments
 
 ### run_opencode_container.sh
 
