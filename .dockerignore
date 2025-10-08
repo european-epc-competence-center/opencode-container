@@ -1,0 +1,23 @@
+# Ignore git history
+.git
+.gitignore
+
+# Ignore documentation (not needed in build context)
+README.md
+Changelog.md
+
+# Ignore shell scripts (not copied into image)
+*.sh
+
+# Ignore cursor/editor files
+.cursor/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Ignore common local files
+.env
+.env.local
+*.log
+

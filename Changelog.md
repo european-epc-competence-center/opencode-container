@@ -16,3 +16,9 @@
   - Troubleshooting section
 - Initialized AI notes in `.cursor/notes/index.md`
 - Established changelog tracking
+- Added `--progress=plain` flag to docker build commands for full build output
+- Optimized Docker build caching:
+  - Added `.dockerignore` to prevent unnecessary build context changes
+  - Enabled BuildKit with cache mounts for apt packages
+  - Ensures apt-get install layer is properly cached between builds
+- Fixed OpenCode installation to use `npm install -g opencode-ai` instead of curl script for better PATH compatibility in containers

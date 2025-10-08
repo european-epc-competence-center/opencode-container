@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 show_help() {
     cat <<EOF
 Usage: $(basename "$0") [OPTIONS]
@@ -47,14 +49,14 @@ build_image() {
     # Force rebuild if requested
     if [ "$force_build" = true ]; then
         echo "Force rebuilding opencode image..."
-        docker build -t opencode .
+        DOCKER_BUILDKIT=1 docker build --progress=plain -t opencode .
         return
     fi
 
     # Build the image if it doesn't exist
     if [ -z "$(docker images -q opencode 2>/dev/null)" ]; then
         echo "Building opencode image..."
-        docker build -t opencode .
+        DOCKER_BUILDKIT=1 docker build --progress=plain -t opencode .
     else
         echo "Using existing opencode image."
     fi
@@ -71,7 +73,6 @@ run_container() {
         -v "$(pwd):/app" \
         -v "$HOME/.local/share/opencode:/root/.local/share/opencode" \
         -v "$HOME/.config/opencode:/root/.config/opencode" \
-        opencode \
         opencode
 }
 

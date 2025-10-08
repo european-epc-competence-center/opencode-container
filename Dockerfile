@@ -1,6 +1,10 @@
 FROM ubuntu:22.04
 
-RUN apt-get update \
+# Install system dependencies in a separate layer for better caching
+# This layer will only rebuild if the package list changes
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
     && apt-get install -y \
         git \   
         bash \
@@ -15,12 +19,13 @@ RUN apt-get update \
         python3-pip \
         python3-venv \
         npm \
-        node \
-    && rm -rf /var/lib/apt/lists/*
+        ripgrep \
+    && apt-get clean
 
-RUN curl -fsSL https://opencode.ai/install | bash
+# Install OpenCode globally via npm (more reliable in containers)
+RUN npm install -g opencode-ai
 
 WORKDIR /app
 
 
-CMD ["opencode"]
+CMD ["/bin/bash", "-c", "opencode"]

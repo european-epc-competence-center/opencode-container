@@ -23,7 +23,7 @@ This project provides Docker containerization for OpenCode to isolate AI code ex
 
 - Base: Ubuntu 22.04
 - Installs common dev tools: git, bash, python3, npm, curl, jq, etc.
-- Installs OpenCode via official installer: `https://opencode.ai/install`
+- Installs OpenCode via npm: `npm install -g opencode-ai` (ensures proper PATH setup in container)
 - Default CMD: `opencode`
 
 ### run_opencode_container.sh
