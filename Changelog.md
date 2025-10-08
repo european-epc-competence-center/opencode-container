@@ -2,6 +2,8 @@
 
 ## WIP
 
+## 1.0.0+2025-10-08
+
 - Modified `startup.sh` to prompt user for API key when auth file doesn't exist, instead of using hardcoded key
 - Fixed syntax error in `startup.sh` (missing bracket in file check condition)
 - Changed Dockerfile to use `ENTRYPOINT` instead of `CMD` to properly support argument forwarding to opencode
