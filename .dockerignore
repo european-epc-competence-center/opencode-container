@@ -10,7 +10,6 @@ Changelog.md
 run_opencode_container.sh
 
 # Ignore cursor/editor files
-.cursor/
 .vscode/
 *.swp
 *.swo

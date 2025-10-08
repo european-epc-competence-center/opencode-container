@@ -25,9 +25,14 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 # Install OpenCode globally via npm (more reliable in containers)
 RUN npm install -g opencode-ai
 
-WORKDIR /app
+RUN mkdir -p /cursor/rules
+COPY .cursor/rules/notes.mdc /cursor/rules/notes.mdc
+COPY .cursor/rules/changelog-conventions.mdc /cursor/rules/changelog-conventions.mdc
 
 COPY startup.sh /usr/local/bin/startup.sh
 RUN chmod +x /usr/local/bin/startup.sh
+
+
+WORKDIR /app
 
 ENTRYPOINT ["/usr/local/bin/startup.sh"]

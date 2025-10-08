@@ -2,6 +2,8 @@
 
 ## WIP
 
+- If the workdir does not already have .cursor/rules, init with notes and changelog rule
+
 ## 1.0.0+2025-10-08
 
 - Modified `startup.sh` to prompt user for API key when auth file doesn't exist, instead of using hardcoded key

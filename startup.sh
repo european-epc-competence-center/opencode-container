@@ -58,8 +58,19 @@ EOF
 
 }
 
+init_rules() {
+    if [ ! -d "$HOME/.cursor/rules" ]; then
+        echo "Initializing cursor rules..."
+        mkdir -p "$HOME/.cursor/rules"
+        cp "/cursor/rules/notes.mdc" "$HOME/.cursor/rules/notes.mdc"
+        cp "/cursor/rules/changelog-conventions.mdc" "$HOME/.cursor/rules/changelog-conventions.mdc"
+    fi
+}
+
 main() {
     check_config
+    init_rules
+
     opencode "$@"
 }
 
