@@ -6,7 +6,7 @@ SCRIPT_DIR="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 
 show_help() {
     cat <<EOF
-Usage: $(basename "$0") [OPTIONS]
+Usage: $(basename "$0") [OPTIONS] [-- DOCKER_ARGS...]
 
 Run the OpenCode container. Builds the image if it doesn't exist.
 
@@ -15,8 +15,9 @@ OPTIONS:
     -h          Show this help message and exit
 
 EXAMPLES:
-    $(basename "$0")           # Run the container (build if needed)
-    $(basename "$0") -b        # Force rebuild and run the container
+    $(basename "$0")                    # Run the container (build if needed)
+    $(basename "$0") -b                 # Force rebuild and run the container
+    $(basename "$0") -- --version       # Pass --version to the container
 
 EOF
 }
@@ -43,6 +44,9 @@ parse_args() {
     done
 
     shift $((OPTIND - 1))
+
+    # Store remaining positional arguments
+    POSITIONAL_ARGS=("$@")
 }
 
 build_image() {
@@ -78,7 +82,8 @@ run_container() {
         -v "$(pwd):/app" \
         -v "$HOME/.local/share/opencode:/root/.local/share/opencode" \
         -v "$HOME/.config/opencode:/root/.config/opencode" \
-        opencode
+        opencode \
+        "${POSITIONAL_ARGS[@]}"
 }
 
 main() {

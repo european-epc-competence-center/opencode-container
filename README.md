@@ -32,18 +32,24 @@ This will:
 
 ## Usage
 
-Recommended: Create a link to the run script in your path
+Recommended: Create a link to the run script in your path. The following creates a bin symlink callen `opencode`, you may of course choose another name.
 
 ```
 cd opencode-container
-ln -s $(pdw)/run_opencode_container.sh ~/.local/bin/
+ln -s $(pdw)/run_opencode_container.sh ~/.local/bin/opencode
 ```
 
 then you can run opencode from your project folder
 
 ```
 cd my_awesome_project
-run_opencode_container.sh
+opencode
+```
+
+Or also use open code commands like
+
+```
+opencode run "analyze project and init or update notes according to @./cusror/rules/notes.md"
 ```
 
 ### Manual Docker Usage

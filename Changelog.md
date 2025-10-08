@@ -2,6 +2,8 @@
 
 ## WIP
 
+- Fixed `init_rules()` in `startup.sh` to check individual rule files instead of just the directory, ensuring rules are copied even if directory exists but files are missing
+- Enhanced `run_opencode_container.sh` to pass all positional arguments to the docker run command, allowing arguments to be forwarded to the container
 - Improved script directory detection in `run_opencode_container.sh` to follow symlinks using `pwd -P`
 - If the workdir does not already have .cursor/rules, init with notes and changelog rule
 

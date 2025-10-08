@@ -59,10 +59,15 @@ EOF
 }
 
 init_rules() {
-    if [ ! -d "$HOME/.cursor/rules" ]; then
-        echo "Initializing cursor rules..."
-        mkdir -p "$HOME/.cursor/rules"
+    mkdir -p "$HOME/.cursor/rules"
+
+    if [ ! -f "$HOME/.cursor/rules/notes.mdc" ]; then
+        echo "Initializing notes.mdc rule..."
         cp "/cursor/rules/notes.mdc" "$HOME/.cursor/rules/notes.mdc"
+    fi
+
+    if [ ! -f "$HOME/.cursor/rules/changelog-conventions.mdc" ]; then
+        echo "Initializing changelog-conventions.mdc rule..."
         cp "/cursor/rules/changelog-conventions.mdc" "$HOME/.cursor/rules/changelog-conventions.mdc"
     fi
 }
