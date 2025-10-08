@@ -2,6 +2,7 @@
 
 ## WIP
 
+- Improved script directory detection in `run_opencode_container.sh` to follow symlinks using `pwd -P`
 - If the workdir does not already have .cursor/rules, init with notes and changelog rule
 
 ## 1.0.0+2025-10-08

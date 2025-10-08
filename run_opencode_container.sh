@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 
 show_help() {
     cat <<EOF
@@ -47,6 +47,9 @@ parse_args() {
 
 build_image() {
     local force_build=$1
+
+    echo "Building opencode image..."
+    echo "Build directory: $SCRIPT_DIR"
 
     # Force rebuild if requested
     if [ "$force_build" = true ]; then
