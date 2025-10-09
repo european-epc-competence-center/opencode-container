@@ -4,9 +4,11 @@ alwaysApply: true
 
 # Changelog Conventions
 
-**Always update the Changelog.md file to track changes.**
+**Always update the Changelog.md file upon changing the code!**
 
 Make sure that new changes are always added to the top of the list!
+
+Never change existing release sections.
 
 ## Sections and Structure
 
@@ -18,7 +20,7 @@ Make sure that new changes are always added to the top of the list!
 
 ### Version Sections
 
-We use semantic versioning.
+We use semantic versioning for release versions. Releases appear as sections containing the release version.
 
 - Format: `## X.Y.Z+YYYY-MM-DD` where:
   - X.Y.Z is the version number consisting of
@@ -30,21 +32,19 @@ We use semantic versioning.
 
 ## Entry Guidelines
 
-- Start each entry with a dash `-`
-- For issue references, place them at the start: `- 10469: fixed bug in...`
-- Group related changes together
-- Use backticks for code references: `` `methodName` ``
-- Use indentation for sub-details:
+- We use markdown lists. Start each entry with a dash `-`
+- Group related changes together, adding sub items (indentation) to existing ones, if this is a follow up change to the same topic.
+- Generally use markdown sub items, i.e. indentation, for sub-details:
   ```
   - New feature: X
   ```
+- Use backticks for code references: `` `methodName` ``
 
 ## Entry Categories
 
+- **Breaking changes**: Usually warrant a MAJOR version bump (mark these clearly)
 - **New features**: Usually warrant a MINOR version bump
 - **Bugfixes**: Usually warrant a PATCH version bump
-- **Breaking changes**: Usually warrant a MAJOR version bump (mark these clearly)
-- **Internal improvements**: Depends on impact
 
 ## Best Practices
 
@@ -54,4 +54,4 @@ We use semantic versioning.
 - If an endpoint changed, explicitly mention the old and new endpoint path
 - Use consistent terminology
 - Keep entries concise but descriptive
-- Do not manually add version headers - they are added by the release script
+- Do not add version headers but extend the WIP section - versions are added in releases
