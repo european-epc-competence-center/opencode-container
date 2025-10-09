@@ -20,7 +20,7 @@ Recommended: Create a link to the run script in your path. The following creates
 
 ```
 cd opencode-container
-ln -s $(pdw)/run_opencode_container.sh ~/.local/bin/opencode
+ln -s $(pwd)/run_opencode_container.sh ~/.local/bin/opencode
 ```
 
 then you can run opencode from your project folder
