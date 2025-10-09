@@ -14,24 +14,6 @@ This project provides a containerized OpenCode installation that:
 - Initializes EECC opencode config, if not already initialized
 - Initializes `.cursor/rules` in any workdir, if not already present.
 
-## Quick Start
-
-```bash
-# Clone this repository
-git clone git@gitlab.eecc.info:eecc-internal/opencode-container.git
-cd opencode-container
-
-# Run OpenCode in a container (builds automatically if needed)
-./run_opencode_container.sh
-```
-
-This will:
-
-1. Build the OpenCode Docker image (if not already built)
-2. Mount your current directory to `/app` in the container
-3. Mount OpenCode config directories for persistence
-4. Start an interactive OpenCode session
-
 ## Usage
 
 Recommended: Create a link to the run script in your path. The following creates a bin symlink callen `opencode`, you may of course choose another name.
@@ -54,22 +36,23 @@ Or also use open code commands like
 opencode run "analyze project and init or update notes according to @./cusror/rules/notes.md"
 ```
 
-### Manual Docker Usage
-
-If you prefer to run Docker commands manually:
+## Local Build
 
 ```bash
-# Build the image
-docker build -t opencode .
+# Clone this repository
+git clone git@gitlab.eecc.info:eecc-internal/opencode-container.git
+cd opencode-container
 
-# Run the container
-docker run -it --rm \
-    --name opencode \
-    -v "$(pwd):/app" \
-    -v "$HOME/.local/share/opencode:/root/.local/share/opencode" \
-    -v "$HOME/.config/opencode:/root/.config/opencode" \
-    opencode
+# Run OpenCode in a container (builds automatically if needed)
+./build_and_run_opencode_container.sh
 ```
+
+This will:
+
+1. Build the OpenCode Docker image (if not already built, force with `-b`)
+2. Mount your current directory to `/app` in the container
+3. Mount OpenCode config directories for persistence
+4. Start an interactive OpenCode session
 
 ## License
 

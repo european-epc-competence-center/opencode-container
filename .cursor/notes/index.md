@@ -54,10 +54,11 @@ Then launches `opencode "$@"` with forwarded arguments.
 
 Wrapper script with:
 
-- **Options:** `-b` (force rebuild), `-h` (help)
+- **Options:** `-b` (force rebuild), `-i IMAGE` (custom image name), `-h` (help)
 - **Argument parsing:** Manual parsing (not getopts) to properly handle `--` separator
   - Arguments after `--` are forwarded to opencode without interpretation
   - Allows passing options like `-b` or `-h` to opencode instead of the wrapper script
+  - Image name defaults to `opencode:local` but can be overridden with `-i` or `IMAGE` env var
 - **Logic:**
   - Detects script dir via `readlink -f` (follows symlinks)
   - Builds `opencode` image if missing or if `-b` specified
