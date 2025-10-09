@@ -41,8 +41,9 @@ Container initialization with two main functions:
    - Creates `~/.config/opencode/config.json` if missing
    - Preconfigured for EECC API (baseURL: `https://api.eecc.ai/v1`)
    - Models: `claude-sonnet-4-20250514`, `claude-sonnet-4-5-20250929`
-   - Prompts for EECC API key if `~/.local/share/opencode/auth.json` missing
-   - Key entry portal: `https://portal.eecc.ai/`
+   - If `~/.local/share/opencode/auth.json` missing, asks user via yes/no question if they want to connect to EECC API
+     - If yes: prompts for API key from `https://portal.eecc.ai/`
+     - If no: runs `opencode auth login` for standard authentication
 
 2. **init_rules():**
    - Checks each rule file individually and copies from `/cursor/rules/` only if missing
@@ -100,9 +101,9 @@ Excludes from build context:
 ## Typical User Workflow
 
 1. Symlink script to PATH: `ln -s $(pwd)/run_opencode_container.sh ~/.local/bin/`
-2. Nroject: `cd ~/my_project`
+2. Navigate to project: `cd ~/my_project`
 3. Run: `run_opencode_container.sh`
-4. First run: Enter EECC API key when prompted
+4. First run: Answer yes/no to EECC API question and follow prompts
 5. Container inits rules in workdir, launches OpenCode
 
 ## Troubleshooting Notes

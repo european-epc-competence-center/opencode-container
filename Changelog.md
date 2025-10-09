@@ -2,6 +2,10 @@
 
 ## WIP
 
+- Added authentication method selection in `startup.sh`
+  - User is asked via yes/no question if they want to connect to EECC AI API
+  - If yes: prompts for API key from https://portal.eecc.ai/
+  - If no: runs `opencode auth login` for standard authentication
 - Improved argument parsing in `run_opencode_container.sh` to properly handle `--` separator
   - All arguments after `--` are now forwarded to opencode without interpretation by the script
   - Allows passing options like `-b` or `-h` to opencode instead of the wrapper script
