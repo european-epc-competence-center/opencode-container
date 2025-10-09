@@ -2,11 +2,11 @@
 
 set -e
 
-SCRIPT_DIR="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
-
 IMAGE="${IMAGE:="opencode:local"}"
 
-source ./common.sh
+SCRIPT_DIR="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+
+source "${SCRIPT_DIR}"/common.sh
 
 show_help() {
     cat <<EOF
