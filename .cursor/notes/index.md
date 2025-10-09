@@ -55,6 +55,9 @@ Then launches `opencode "$@"` with forwarded arguments.
 Wrapper script with:
 
 - **Options:** `-b` (force rebuild), `-h` (help)
+- **Argument parsing:** Manual parsing (not getopts) to properly handle `--` separator
+  - Arguments after `--` are forwarded to opencode without interpretation
+  - Allows passing options like `-b` or `-h` to opencode instead of the wrapper script
 - **Logic:**
   - Detects script dir via `readlink -f` (follows symlinks)
   - Builds `opencode` image if missing or if `-b` specified
@@ -65,7 +68,7 @@ Wrapper script with:
   - `~/.local/share/opencode → /root/.local/share/opencode` (auth persistence)
   - `~/.config/opencode → /root/.config/opencode` (config persistence)
 - **Container:** Interactive (`-it`), auto-cleanup (`--rm`), named `opencode`
-- **Args:** Forwards remaining positional args to container
+- **Args:** Forwards all positional args to container
 
 ### .dockerignore (`/app/.dockerignore`)
 

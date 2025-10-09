@@ -1,3 +1,5 @@
+[![Docker](https://github.com/european-epc-competence-center/opencode-container/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/european-epc-competence-center/opencode-container/actions/workflows/docker-publish.yml)
+
 # OpenCode Container
 
 A Docker container for running OpenCode in an isolated environment to protect your host system from potential AI-executed commands.

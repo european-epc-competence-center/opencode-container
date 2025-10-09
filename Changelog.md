@@ -2,6 +2,10 @@
 
 ## WIP
 
+- Improved argument parsing in `run_opencode_container.sh` to properly handle `--` separator
+  - All arguments after `--` are now forwarded to opencode without interpretation by the script
+  - Allows passing options like `-b` or `-h` to opencode instead of the wrapper script
+  - Updated help text with clearer explanation and additional usage examples
 - Fixed `init_rules()` in `startup.sh` to check individual rule files instead of just the directory, ensuring rules are copied even if directory exists but files are missing
 - Enhanced `run_opencode_container.sh` to pass all positional arguments to the docker run command, allowing arguments to be forwarded to the container
 - Improved script directory detection in `run_opencode_container.sh` to follow symlinks using `pwd -P`
