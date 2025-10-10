@@ -6,6 +6,7 @@ source "${SCRIPT_DIR}"/common.sh
 
 main() {
     IMAGE="ghcr.io/european-epc-competence-center/opencode-container:main"
+    docker pull "$IMAGE"
     POSITIONAL_ARGS=("$@")
     run_container
 }
