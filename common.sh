@@ -15,9 +15,11 @@ run_container() {
 
     docker run -it --rm \
         --name opencode \
+        -e HOST_UID="$(id -u)" \
+        -e HOST_GID="$(id -g)" \
         -v "$(pwd):/app" \
-        -v "$HOME/.local/share/opencode:/root/.local/share/opencode" \
-        -v "$HOME/.config/opencode:/root/.config/opencode" \
+        -v "$HOME/.local/share/opencode:/home/opencode/.local/share/opencode" \
+        -v "$HOME/.config/opencode:/home/opencode/.config/opencode" \
         "$IMAGE" \
         "${POSITIONAL_ARGS[@]}"
 }

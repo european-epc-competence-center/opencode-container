@@ -2,6 +2,17 @@
 
 ## WIP
 
+- **Fixed permission issues with files created in mounted volumes**
+  - Container now runs as the host user instead of root
+  - Added `gosu` package to Dockerfile for secure user switching
+  - Created `opencode` user with placeholder UID/GID 1000 in Dockerfile
+  - Modified `startup.sh` to check current user and re-exec itself as `opencode` user via `gosu` after configuring UID/GID
+  - Modified `common.sh` to pass `HOST_UID` and `HOST_GID` environment variables (from `$(id -u)` and `$(id -g)`)
+  - Updated volume mount paths from `/root/` to `/home/opencode/` for config and auth directories
+  - Files created by AI inside container now belong to the host user, preventing access problems
+- Refactored `startup.sh` to eliminate code duplication
+  - Script now re-execs itself after user configuration instead of using heredoc to pipe code into bash
+  - Reduced script from 219 to 131 lines by removing duplicate function definitions
 - Added authentication method selection in `startup.sh`
   - User is asked via yes/no question if they want to connect to EECC AI API
   - If yes: prompts for API key from https://portal.eecc.ai/

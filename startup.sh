@@ -2,6 +2,29 @@
 
 set -e
 
+# Configure user to match host user UID/GID to avoid permission issues
+# This function runs as root and updates the opencode user's UID/GID
+configure_user() {
+    local host_uid=${HOST_UID:-1000}
+    local host_gid=${HOST_GID:-1000}
+
+    # Get current UID/GID of opencode user
+    local current_uid
+    local current_gid
+    current_uid=$(id -u opencode)
+    current_gid=$(id -g opencode)
+
+    # Only update if different from current values
+    if [ "$current_uid" != "$host_uid" ] || [ "$current_gid" != "$host_gid" ]; then
+        echo "Configuring container user to match host user (UID: $host_uid, GID: $host_gid)..."
+        groupmod -g "$host_gid" opencode
+        usermod -u "$host_uid" -g "$host_gid" opencode
+
+        # Fix ownership of home directory
+        chown -R opencode:opencode /home/opencode
+    fi
+}
+
 check_config() {
     if [ ! -f ~/.local/share/opencode/auth.json ]; then
         echo "Auth file not found."
@@ -92,6 +115,15 @@ init_rules() {
 }
 
 main() {
+    # Check if we're running as the opencode user
+    if [ "$(whoami)" != "opencode" ]; then
+        # Running as root - configure user and re-exec as opencode user
+        configure_user
+        exec gosu opencode "$0" "$@"
+        exit 0
+    fi
+
+    # Now running as opencode user - proceed with normal startup
     check_config
     init_rules
 

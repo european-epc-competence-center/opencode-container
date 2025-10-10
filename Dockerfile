@@ -20,7 +20,12 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         python3-venv \
         npm \
         ripgrep \
+        gosu \
     && apt-get clean
+
+# Create a user with placeholder UID and GID that will be updated at runtime
+RUN groupadd -g 1000 opencode && \
+    useradd -m -u 1000 -g opencode -s /bin/bash opencode
 
 # Install OpenCode globally via npm (more reliable in containers)
 RUN npm install -g opencode-ai
