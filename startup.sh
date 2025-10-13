@@ -14,15 +14,17 @@ configure_user() {
     current_uid=$(id -u opencode)
     current_gid=$(id -g opencode)
 
+    echo "Current UID: $current_uid, Current GID: $current_gid"
+    echo "Host UID: $host_uid, Host GID: $host_gid"
+
     # Only update if different from current values
     if [ "$current_uid" != "$host_uid" ] || [ "$current_gid" != "$host_gid" ]; then
         echo "Configuring container user to match host user (UID: $host_uid, GID: $host_gid)..."
         groupmod -g "$host_gid" opencode
         usermod -u "$host_uid" -g "$host_gid" opencode
-
-        # Fix ownership of home directory
-        chown -R opencode:opencode /home/opencode
     fi
+    # Fix ownership of home directory
+    chown -R opencode:opencode /home/opencode
 }
 
 check_config() {
@@ -117,13 +119,13 @@ init_rules() {
 main() {
     # Check if we're running as the opencode user
     if [ "$(whoami)" != "opencode" ]; then
-        # Running as root - configure user and re-exec as opencode user
+        echo "Running as root - configure user and re-exec as opencode user"
         configure_user
         exec gosu opencode "$0" "$@"
         exit 0
     fi
 
-    # Now running as opencode user - proceed with normal startup
+    echo "Running as opencode user - proceed with normal startup"
     check_config
     init_rules
 

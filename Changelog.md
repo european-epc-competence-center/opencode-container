@@ -2,6 +2,8 @@
 
 ## WIP
 
+## 1.1.0+2025-10-10
+
 - **Fixed permission issues with files created in mounted volumes**
   - Container now runs as the host user instead of root
   - Added `gosu` package to Dockerfile for secure user switching

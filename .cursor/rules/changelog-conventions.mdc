@@ -4,7 +4,7 @@ alwaysApply: true
 
 # Changelog Conventions
 
-**Always update the Changelog.md file upon changing the code!**
+**Always update the Changelog.md in the corresponding sub project upon changing the project code!**
 
 Make sure that new changes are always added to the top of the list!
 
