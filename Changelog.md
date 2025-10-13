@@ -2,6 +2,10 @@
 
 ## WIP
 
+- Added `-s` flag support in `startup.sh` to run alternative commands
+  - Usage: `-s <command> [args...]` runs the specified command with arguments instead of opencode
+  - Without `-s` flag: runs `opencode` with all provided arguments as before
+
 ## 1.1.0+2025-10-10
 
 - **Fixed permission issues with files created in mounted volumes**

@@ -34,7 +34,7 @@ RUN mkdir -p /cursor/rules
 COPY .cursor/rules/notes.mdc /cursor/rules/notes.mdc
 COPY .cursor/rules/changelog-conventions.mdc /cursor/rules/changelog-conventions.mdc
 
-COPY startup.sh /usr/local/bin/startup.sh
+COPY docker_scripts/* /usr/local/bin/
 RUN chmod +x /usr/local/bin/startup.sh
 
 

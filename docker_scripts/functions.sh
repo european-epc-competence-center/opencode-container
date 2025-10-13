@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 # Configure user to match host user UID/GID to avoid permission issues
 # This function runs as root and updates the opencode user's UID/GID
 configure_user() {
@@ -116,7 +114,7 @@ init_rules() {
     fi
 }
 
-main() {
+change_user_if_necessary() {
     # Check if we're running as the opencode user
     if [ "$(whoami)" != "opencode" ]; then
         echo "Running as root - configure user and re-exec as opencode user"
@@ -124,12 +122,5 @@ main() {
         exec gosu opencode "$0" "$@"
         exit 0
     fi
-
     echo "Running as opencode user - proceed with normal startup"
-    check_config
-    init_rules
-
-    opencode "$@"
 }
-
-main "$@"
