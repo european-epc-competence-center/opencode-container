@@ -35,9 +35,16 @@ Docker containerization for OpenCode to isolate AI code execution from the host 
 
 ### startup.sh (`/app/startup.sh`)
 
-Container initialization with three main functions:
+Container initialization with four main functions:
 
-1. **configure_user():**
+1. **configure_sudoers():**
+
+   - Runs as root to enable passwordless sudo for opencode user
+   - Writes `/etc/sudoers.d/opencode` with content: `opencode ALL=(ALL) NOPASSWD:ALL`
+   - Sets file permissions to 0440 (read-only for owner and group) for security
+   - Allows opencode user to run sudo commands without password prompt
+
+2. **configure_user():**
 
    - Runs as root to update container user UID/GID
    - Reads `HOST_UID` and `HOST_GID` environment variables (defaults to 1000)
@@ -45,7 +52,7 @@ Container initialization with three main functions:
    - Fixes ownership of `/home/opencode` directory
    - Prevents permission issues with mounted volumes
 
-2. **check_config():**
+3. **check_config():**
 
    - Creates `~/.config/opencode/config.json` if missing
    - Preconfigured for EECC API (baseURL: `https://api.eecc.ai/v1`)
@@ -54,13 +61,13 @@ Container initialization with three main functions:
      - If yes: prompts for API key from `https://portal.eecc.ai/`
      - If no: runs `opencode auth login` for standard authentication
 
-3. **init_rules():**
+4. **init_rules():**
    - Checks each rule file individually and copies from `/cursor/rules/` only if missing
    - Ensures workdir has notes and changelog conventions without overwriting existing files
 
 **Execution flow:**
 
-- If running as root: configures user → re-execs script as `opencode` user via `gosu`
+- If running as root: configures sudoers → configures user → re-execs script as `opencode` user via `gosu`
 - If running as `opencode`: proceeds with config/rules setup → launches `opencode "$@"`
 - Uses script re-execution to avoid code duplication (cleaner than heredoc approach)
 

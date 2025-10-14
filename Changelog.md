@@ -2,6 +2,10 @@
 
 ## WIP
 
+- Added passwordless sudo configuration for opencode user
+  - New `configure_sudoers()` function in `functions.sh` creates `/etc/sudoers.d/opencode` with proper permissions (0440)
+  - Configuration grants opencode user ability to run sudo commands without password prompt
+  - Called from `change_user_if_necessary()` before switching to opencode user
 - Added `-s` flag support in `startup.sh` to run alternative commands
   - Usage: `-s <command> [args...]` runs the specified command with arguments instead of opencode
   - Without `-s` flag: runs `opencode` with all provided arguments as before
