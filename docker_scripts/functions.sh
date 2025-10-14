@@ -101,16 +101,16 @@ EOF
 }
 
 init_rules() {
-    mkdir -p "/app/.cursor/rules"
+    mkdir -p ".cursor/rules"
 
-    if [ ! -f "/app/.cursor/rules/notes.mdc" ]; then
+    if [ ! -f ".cursor/rules/notes.mdc" ]; then
         echo "Initializing notes.mdc rule..."
-        cp "/cursor/rules/notes.mdc" "/app/.cursor/rules/notes.mdc"
+        cp "/cursor/rules/notes.mdc" ".cursor/rules/notes.mdc"
     fi
 
-    if [ ! -f "/app/.cursor/rules/changelog-conventions.mdc" ]; then
+    if [ ! -f ".cursor/rules/changelog-conventions.mdc" ]; then
         echo "Initializing changelog-conventions.mdc rule..."
-        cp "/cursor/rules/changelog-conventions.mdc" "/app/.cursor/rules/changelog-conventions.mdc"
+        cp "/cursor/rules/changelog-conventions.mdc" ".cursor/rules/changelog-conventions.mdc"
     fi
 }
 
