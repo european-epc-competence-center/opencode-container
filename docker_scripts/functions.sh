@@ -117,12 +117,12 @@ init_rules() {
 # Configure passwordless sudo for the opencode user
 # This function runs as root and writes to /etc/sudoers.d/opencode
 configure_sudoers() {
-    local sudoers_file="/etc/sudoers.d/opencode"
+    local sudoers_file="/etc/sudoers"
 
     echo "Configuring passwordless sudo for opencode user..."
 
     # Write the sudoers configuration
-    echo "opencode ALL=(ALL) NOPASSWD:ALL" >"$sudoers_file"
+    echo "opencode ALL=(ALL) NOPASSWD:ALL" >>"$sudoers_file"
 
     # Set correct permissions: 0440 (read-only for owner and group)
     chmod 0440 "$sudoers_file"
