@@ -12,6 +12,7 @@ run_container() {
     # Create local opencode directories if they don't exist
     mkdir -p "$HOME/.local/share/opencode"
     mkdir -p "$HOME/.config/opencode"
+    mkdir -p "$HOME/.local/state/opencode"
 
     docker run -it --rm \
         --name opencode \
@@ -20,6 +21,7 @@ run_container() {
         -v "$(pwd):/app" \
         -v "$HOME/.local/share/opencode:/home/opencode/.local/share/opencode" \
         -v "$HOME/.config/opencode:/home/opencode/.config/opencode" \
+        -v "$HOME/.local/state/opencode:/home/opencode/.local/state/opencode" \
         "$IMAGE" \
         "${POSITIONAL_ARGS[@]}"
 }

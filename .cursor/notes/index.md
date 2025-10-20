@@ -84,7 +84,7 @@ Wrapper script with:
   - Detects script dir via `readlink -f` (follows symlinks)
   - Builds `opencode` image if missing or if `-b` specified
   - Uses `DOCKER_BUILDKIT=1` with `--progress=plain` for full build logs
-  - Creates `~/.local/share/opencode` and `~/.config/opencode` on host
+  - Creates `~/.local/share/opencode`, `~/.config/opencode`, and `~/.local/state/opencode` on host
 - **User mapping:**
   - Passes `HOST_UID` and `HOST_GID` environment variables (from `$(id -u)` and `$(id -g)`)
   - Container runs as matching user to prevent permission issues with mounted volumes
@@ -92,6 +92,7 @@ Wrapper script with:
   - `$(pwd) → /app` (working directory)
   - `~/.local/share/opencode → /home/opencode/.local/share/opencode` (auth persistence)
   - `~/.config/opencode → /home/opencode/.config/opencode` (config persistence)
+  - `~/.local/state/opencode → /home/opencode/.local/state/opencode` (state persistence)
 - **Container:** Interactive (`-it`), auto-cleanup (`--rm`), named `opencode`
 - **Args:** Forwards all positional args to container
 
