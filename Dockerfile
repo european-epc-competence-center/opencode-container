@@ -12,6 +12,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         curl \
         ca-certificates \
         file \
+        zip \
+        sudo \
         unzip \
         wget \
         jq \
