@@ -54,6 +54,41 @@ This will:
 3. Mount OpenCode config directories for persistence
 4. Start an interactive OpenCode session
 
+## Mounting Additional Volumes
+
+You can mount additional directories into the container using either command line options or environment variables.
+
+### Using Command Line Options
+
+Use the `-v` option to mount additional volumes (can be specified multiple times):
+
+```bash
+# Mount a single additional volume
+./build_and_run_opencode_container.sh -v /host/data:/container/data
+
+# Mount multiple volumes
+./build_and_run_opencode_container.sh -v /host/data:/data -v /host/logs:/logs
+```
+
+### Using Environment Variables
+
+Set the `OPENCODE_EXTRA_MOUNTS` environment variable with semicolon-separated mount specifications:
+
+```bash
+# Mount multiple volumes via environment variable
+OPENCODE_EXTRA_MOUNTS="/host/data:/data;/host/logs:/logs" ./build_and_run_opencode_container.sh
+
+# Or export it for all subsequent runs
+export OPENCODE_EXTRA_MOUNTS="/host/data:/data;/host/logs:/logs"
+./build_and_run_opencode_container.sh
+```
+
+### Mount Format
+
+Both methods use the Docker volume mount format: `/host/path:/container/path`
+
+For read-only mounts, append `:ro`: `/host/path:/container/path:ro`
+
 ## License
 
 Copyright 2025 European EPC Competence Center GmbH (EECC). Corresponding Author: Sebastian Schmittner <sebastian.schmittner@eecc.de>
