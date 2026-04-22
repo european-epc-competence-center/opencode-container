@@ -2,6 +2,7 @@
 
 ## WIP
 
+- Rebuild for lates open code
 - Added `~/.local/state/opencode` volume mount for state persistence
 - Added passwordless sudo configuration for opencode user
   - New `configure_sudoers()` function in `functions.sh` creates `/etc/sudoers.d/opencode` with proper permissions (0440)
