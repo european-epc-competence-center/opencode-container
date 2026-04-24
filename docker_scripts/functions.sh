@@ -1,27 +1,44 @@
 #!/usr/bin/env bash
 
 # Configure user to match host user UID/GID to avoid permission issues
-# This function runs as root and updates the opencode user's UID/GID
+# This function runs as root and updates the opencode user's UID/GID.
+# It expects the base image to have any default 1000:1000 user removed
+# (see Dockerfile) so the remapping does not collide.
 configure_user() {
     local host_uid=${HOST_UID:-1000}
     local host_gid=${HOST_GID:-1000}
 
-    # Get current UID/GID of opencode user
-    local current_uid
-    local current_gid
+    local current_uid current_gid
     current_uid=$(id -u opencode)
     current_gid=$(id -g opencode)
 
     echo "Current UID: $current_uid, Current GID: $current_gid"
     echo "Host UID: $host_uid, Host GID: $host_gid"
 
-    # Only update if different from current values
-    if [ "$current_uid" != "$host_uid" ] || [ "$current_gid" != "$host_gid" ]; then
-        echo "Configuring container user to match host user (UID: $host_uid, GID: $host_gid)..."
-        groupmod -g "$host_gid" opencode
-        usermod -u "$host_uid" -g "$host_gid" opencode
+    if [ "$current_uid" = "$host_uid" ] && [ "$current_gid" = "$host_gid" ]; then
+        echo "Container user already matches host user."
+    else
+        echo "Remapping container user to match host user (UID: $host_uid, GID: $host_gid)..."
+
+        # Change GID first, then UID
+        if [ "$current_gid" != "$host_gid" ]; then
+            if getent group "$host_gid" >/dev/null 2>&1; then
+                echo "Warning: GID $host_gid already exists. Removing conflicting group."
+                groupdel "$(getent group "$host_gid" | cut -d: -f1)" 2>/dev/null || true
+            fi
+            groupmod -g "$host_gid" opencode
+        fi
+
+        if [ "$current_uid" != "$host_uid" ]; then
+            if getent passwd "$host_uid" >/dev/null 2>&1; then
+                echo "Warning: UID $host_uid already exists. Removing conflicting user."
+                userdel "$(getent passwd "$host_uid" | cut -d: -f1)" 2>/dev/null || true
+            fi
+            usermod -u "$host_uid" -g "$host_gid" opencode
+        fi
     fi
-    # Fix ownership of home directory
+
+    # Ensure home directory ownership is correct
     chown -R opencode:opencode /home/opencode
 }
 
@@ -115,18 +132,17 @@ init_rules() {
 }
 
 # Configure passwordless sudo for the opencode user
-# This function runs as root and writes to /etc/sudoers.d/opencode
+# Uses a drop-in file under /etc/sudoers.d/ so we never touch the main sudoers file.
 configure_sudoers() {
-    local sudoers_file="/etc/sudoers"
+    local drop_in_file="/etc/sudoers.d/opencode"
+
+    if [ -f "$drop_in_file" ]; then
+        return 0
+    fi
 
     echo "Configuring passwordless sudo for opencode user..."
-
-    # Write the sudoers configuration
-    echo "opencode ALL=(ALL) NOPASSWD:ALL" >>"$sudoers_file"
-
-    # Set correct permissions: 0440 (read-only for owner and group)
-    chmod 0440 "$sudoers_file"
-
+    echo "opencode ALL=(ALL) NOPASSWD:ALL" >"$drop_in_file"
+    chmod 0440 "$drop_in_file"
     echo "Sudoers configuration complete."
 }
 

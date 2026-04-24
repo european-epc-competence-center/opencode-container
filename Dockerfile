@@ -1,5 +1,11 @@
 FROM ubuntu:26.04
 
+# Remove the default ubuntu user/group (UID/GID 1000) to avoid conflicts
+# when remapping the opencode user to match the host user's UID/GID.
+# Ubuntu 26.04 ships with a 'ubuntu' user that occupies 1000:1000.
+RUN userdel -r ubuntu 2>/dev/null || true && \
+    groupdel ubuntu 2>/dev/null || true
+
 # Install system dependencies in a separate layer for better caching
 # This layer will only rebuild if the package list changes
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
