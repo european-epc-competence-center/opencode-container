@@ -66,20 +66,20 @@ EOF
                         "baseURL": "https://api.eecc.ai/v1"
                     },
                     "models": {
-                        "claude-sonnet-4-20250514": {
-                            "name": "Claude Sonnet 4"
+                        "claude-sonnet-4-6": {
+                            "name": "Claude Sonnet 4.6"
                         },
-                        "claude-sonnet-4-5-20250929": {
-                            "name": "Claude Sonnet 4.5"
+                        "claude-opus-4-7": {
+                            "name": "Claude Opus 4.7"
+                        },
+                        "kimi-k2.6": {
+                            "name": "Kimi K 2.6"
                         },
                         "qwen3-coder": {
                             "name": "Qwen3 Coder"
                         },
                         "qwen3-coder-max": {
                             "name": "Qwen3 Coder Max"
-                        },
-                        "claude-opus-4-1-20250805": {
-                            "name": "Claude Opus 4.1"
                         }
                     }
                 }

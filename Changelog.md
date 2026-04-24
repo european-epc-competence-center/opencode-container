@@ -2,6 +2,11 @@
 
 ## WIP
 
+- Updated default model list in `functions.sh` to match current EECC API (`/v1/models`)
+  - Replaced `claude-sonnet-4-20250514` and `claude-sonnet-4-5-20250929` with `claude-sonnet-4-6` (latest unversioned)
+  - Replaced `claude-opus-4-1-20250805` with `claude-opus-4-7` (latest unversioned)
+  - Added `kimi-k2.6`
+  - Kept `qwen3-coder` and `qwen3-coder-max`
 - Rebuild for lates open code
 - Added `~/.local/state/opencode` volume mount for state persistence
 - Added passwordless sudo configuration for opencode user

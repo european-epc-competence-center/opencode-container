@@ -56,7 +56,7 @@ Container initialization with four main functions:
 
    - Creates `~/.config/opencode/config.json` if missing
    - Preconfigured for EECC API (baseURL: `https://api.eecc.ai/v1`)
-   - Models: `claude-sonnet-4-20250514`, `claude-sonnet-4-5-20250929`
+   - Models: `claude-sonnet-4-6`, `claude-opus-4-7`, `kimi-k2.6`, `qwen3-coder`, `qwen3-coder-max`
    - If `~/.local/share/opencode/auth.json` missing, asks user via yes/no question if they want to connect to EECC API
      - If yes: prompts for API key from `https://portal.eecc.ai/`
      - If no: runs `opencode auth login` for standard authentication
