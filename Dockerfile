@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:26.04
 
 # Install system dependencies in a separate layer for better caching
 # This layer will only rebuild if the package list changes
@@ -6,7 +6,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt-get update \
     && apt-get install -y \
-        git \   
+        git \
         bash \
         openssh-client \
         curl \
