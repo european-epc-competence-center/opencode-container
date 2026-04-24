@@ -17,6 +17,8 @@ Run the OpenCode container. Builds the image if it doesn't exist.
 OPTIONS:
     -b              Force rebuild of the OpenCode image
     -i IMAGE        Use specified Docker image name (default: opencode:local)
+    -v MOUNT        Mount additional volume (format: /host/path:/container/path)
+                    Can be specified multiple times
     -h              Show this help message and exit
 
 ARGUMENTS AFTER '--':
@@ -24,13 +26,20 @@ ARGUMENTS AFTER '--':
     This allows passing options to opencode that would otherwise be interpreted
     by this script (e.g., -b, -h).
 
+ENVIRONMENT VARIABLES:
+    OPENCODE_EXTRA_MOUNTS    Semicolon-separated list of volume mounts
+                             (e.g., "/host/path1:/container/path1;/host/path2:/container/path2")
+
 EXAMPLES:
     $(basename "$0")                        # Run the container (build if needed)
     $(basename "$0") -b                     # Force rebuild and run the container
     $(basename "$0") -i myimage:latest      # Use custom image name
+    $(basename "$0") -v /data:/data         # Mount additional volume
+    $(basename "$0") -v /data:/data -v /logs:/logs  # Mount multiple volumes
     $(basename "$0") -- --version           # Pass --version to opencode
     $(basename "$0") -b -- --help           # Rebuild container, then pass --help to opencode
     $(basename "$0") -i "ghcr.io/european-epc-competence-center/opencode-container:main" -b        # Use the github image instead of the local one
+    OPENCODE_EXTRA_MOUNTS="/data:/data;/logs:/logs" $(basename "$0")  # Mount via environment variable
 
 EOF
 }
@@ -38,6 +47,7 @@ EOF
 parse_args() {
     FORCE_BUILD=false
     POSITIONAL_ARGS=()
+    EXTRA_VOLUMES=()
 
     # Parse arguments manually to properly handle '--' separator
     while [[ $# -gt 0 ]]; do
@@ -59,6 +69,15 @@ parse_args() {
                 exit 1
             fi
             IMAGE="$2"
+            shift 2
+            ;;
+        -v)
+            if [[ -z "$2" || "$2" == -* ]]; then
+                echo "Error: -v requires a mount specification (format: /host/path:/container/path)" >&2
+                show_help
+                exit 1
+            fi
+            EXTRA_VOLUMES+=("$2")
             shift 2
             ;;
         -h)
