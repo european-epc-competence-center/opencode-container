@@ -19,21 +19,20 @@ This project provides a containerized OpenCode installation that:
 Recommended: Create a link to the run script in your path. The following creates a bin symlink callen `opencode`, you may of course choose another name.
 
 ```
-cd opencode-container
-ln -s $(pwd)/run_opencode_container.sh ~/.local/bin/opencode
+wget https://github.com/european-epc-competence-center/opencode-container/raw/refs/heads/main/opencode.sh -O ~/.local/bin/opencode.sh && chmod +x ~/.local/bin/opencode.sh
 ```
 
 then you can run opencode from your project folder
 
 ```
 cd my_awesome_project
-opencode
+opencode.sh
 ```
 
 Or also use open code commands like
 
 ```
-opencode run "analyze project and init or update notes according to @./cusror/rules/notes.md"
+opencode.sh run "analyze project and init or update notes according to @./cusror/rules/notes.md"
 ```
 
 ## Local Build
@@ -43,8 +42,7 @@ opencode run "analyze project and init or update notes according to @./cusror/ru
 git clone git@gitlab.eecc.info:eecc-internal/opencode-container.git
 cd opencode-container
 
-# Run OpenCode in a container (builds automatically if needed)
-./build_and_run_opencode_container.sh
+./opencode.sh -b
 ```
 
 This will:
