@@ -19,7 +19,10 @@ This project provides a containerized OpenCode installation that:
 Recommended: Create a link to the run script in your path. The following creates a bin symlink callen `opencode`, you may of course choose another name.
 
 ```
-wget https://github.com/european-epc-competence-center/opencode-container/raw/refs/heads/main/opencode.sh -O ~/.local/bin/opencode.sh && chmod +x ~/.local/bin/opencode.sh
+wget https://github.com/european-epc-competence-center/opencode-container/raw/refs/heads/main/opencode.sh \ 
+  -O ~/.local/bin/opencode.sh
+
+chmod +x ~/.local/bin/opencode.sh
 ```
 
 then you can run opencode from your project folder
